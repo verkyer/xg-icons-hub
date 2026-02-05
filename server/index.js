@@ -22,11 +22,11 @@ app.use('/images', express.static(path.join(__dirname, '../images')));
 app.use('/static', express.static(path.join(__dirname, '../static')));
 
 // API Routes
-app.get('/api/config', (req, res) => {
+app.get('/api/config.json', (req, res) => {
     res.json(CONFIG);
 });
 
-app.get('/api/icons', (req, res) => {
+app.get('/api/icons.json', (req, res) => {
     try {
         const data = getIcons();
         res.json(data);
@@ -45,5 +45,5 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
     console.log(`- Icons: http://localhost:${PORT}/images`);
-    console.log(`- API:   http://localhost:${PORT}/api/icons`);
+    console.log(`- API:   http://localhost:${PORT}/api/icons.json`);
 });
