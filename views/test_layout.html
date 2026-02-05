@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Card Layout Test</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body { padding: 20px; }
+        .test-section { margin-bottom: 40px; }
+        .test-label { margin-bottom: 10px; font-weight: bold; }
+        /* Force grid to show cards clearly */
+        .icon-grid { border: 1px dashed #ccc; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>布局测试用例</h1>
+    
+    <div class="test-section">
+        <div class="test-label">场景 1: 混合长度文本 (1行, 2行, 超长截断)</div>
+        <div class="icon-grid">
+            <!-- 1 Line -->
+            <div class="icon-card">
+                <div class="icon-img-wrapper">
+                    <img src="/static/favicon.ico" alt="icon">
+                </div>
+                <div class="icon-name">
+                    <span>Short Name</span>
+                </div>
+            </div>
+
+            <!-- 2 Lines -->
+            <div class="icon-card">
+                <div class="icon-img-wrapper">
+                    <img src="/static/favicon.ico" alt="icon">
+                </div>
+                <div class="icon-name">
+                    <span>Two Lines Of Text Here</span>
+                </div>
+            </div>
+
+            <!-- Long Text (Truncated) -->
+            <div class="icon-card">
+                <div class="icon-img-wrapper">
+                    <img src="/static/favicon.ico" alt="icon">
+                </div>
+                <div class="icon-name">
+                    <span>This is a very long text that should be truncated after two lines and show an ellipsis at the end.</span>
+                </div>
+            </div>
+            
+             <!-- Empty Text (Should maintain height) -->
+             <div class="icon-card">
+                <div class="icon-img-wrapper">
+                    <img src="/static/favicon.ico" alt="icon">
+                </div>
+                <div class="icon-name">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

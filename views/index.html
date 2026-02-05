@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XG-icons</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link id="faviconLink" rel="icon" href="/static/favicon.ico">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Header -->
+        <aside class="sidebar">
+            <div class="header-row">
+                <div class="logo">
+                    <img id="siteLogo" src="/static/favicon.ico" alt="Logo" class="logo-img">
+                    <h1 id="siteTitle">XG-icons</h1>
+                </div>
+                
+                <!-- Theme Toggle (Now shared for Desktop/Mobile) -->
+                <div class="controls">
+                    <button id="themeToggle" class="btn-icon" title="切换主题">
+                        🌓
+                    </button>
+                </div>
+            </div>
+            
+            <div class="search-row">
+                <!-- Mobile Category Dropdown -->
+                <div class="mobile-category-wrapper hidden-desktop">
+                    <select id="mobileCategorySelect" class="category-select">
+                        <!-- Options injected by JS -->
+                    </select>
+                </div>
+
+                <div class="search-box">
+                    <div class="input-wrapper">
+                        <input type="text" id="searchInput" placeholder="搜索图标...">
+                        <button id="clearSearch" class="clear-btn hidden" title="清空">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="category-nav hidden-mobile">
+                <ul id="categoryList">
+                    <!-- Categories will be injected here -->
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer hidden-mobile">
+                <footer id="siteFooter" class="site-footer"></footer>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="iconGrid" class="icon-grid">
+                <!-- Icons will be injected here -->
+            </div>
+            
+            <div id="loading" class="loading">加载中...</div>
+            <div id="emptyState" class="empty-state hidden">没有找到匹配的图标</div>
+
+            <button id="backToTop" class="back-to-top hidden" title="回到顶部">👆</button>
+            
+            <footer id="mobileFooter" class="site-footer mobile-footer hidden-desktop"></footer>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">已复制链接!</div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
