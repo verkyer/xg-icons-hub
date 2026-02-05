@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "build": "node build.js",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,12 +21,13 @@
     "url": "https://github.com/verkyer/xg-icons-hub/issues"
   },
   "homepage": "https://github.com/verkyer/xg-icons-hub#readme",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2"
   },
-  "devDependencies": {
-    "wrangler": "^4.63.0"
+  "engines": {
+    "node": ">=16"
   }
 }
