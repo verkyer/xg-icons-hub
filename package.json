@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "build": "node build.js",
+    "deploy": "npm run build && wrangler deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,5 +25,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "wrangler": "^4.63.0"
   }
 }
