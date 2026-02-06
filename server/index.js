@@ -11,7 +11,8 @@ const PORT = process.env.PORT || 5000;
 const CONFIG = {
     SITE_NAME: process.env.SITE_NAME || 'XG-icons',
     LOGO_IMG: process.env.LOGO_IMG || 'favicon.ico',
-    COPYRIGHT: process.env.COPYRIGHT || 'By <a href="https://github.com/verkyer/xg-icons-hub" target="_blank">xg-icons-hub</a>. @<a href="https://www.xiaoge.org" target="_blank">XiaoGe</a>.'
+    COPYRIGHT: process.env.COPYRIGHT || 'By <a href="https://github.com/verkyer/xg-icons-hub" target="_blank">xg-icons-hub</a>. @<a href="https://www.xiaoge.org" target="_blank">XiaoGe</a>.',
+    SEO_DESC: process.env.SEO_DESC || '又一个图标托管项目~ 让你的 Docker 、导航站更 Nice！'
 };
 
 // Middleware
@@ -36,9 +37,27 @@ app.get('/api/icons.json', (req, res) => {
     }
 });
 
-// Serve Frontend
+function applyHtml(html) {
+    const name = (CONFIG.SITE_NAME || 'XG-icons').trim();
+    let logo = CONFIG.LOGO_IMG || 'favicon.ico';
+    if (!/^https?:\/\//.test(logo)) {
+        logo = logo === 'favicon.ico' ? '/static/favicon.ico' : (logo.startsWith('/') ? logo : `/${logo}`);
+    }
+    html = html.replace(/<title>.*?<\/title>/i, `<title>${name}</title>`);
+    html = html.replace(/<h1 id="siteTitle">.*?<\/h1>/i, `<h1 id="siteTitle">${name}</h1>`);
+    html = html.replace(/<img id="siteLogo"[^>]*src="[^"]*"/i, (m)=>m.replace(/src="[^"]*"/, `src="${logo}"`));
+    html = html.replace(/<link id="faviconLink"[^>]*href="[^"]*"/i, (m)=>m.replace(/href="[^"]*"/, `href="${logo}"`));
+    if (/name="description"/i.test(html)) {
+        html = html.replace(/<meta name="description"[^>]*content="[^"]*"/i, `<meta name="description" content="${CONFIG.SEO_DESC}">`);
+    } else {
+        html = html.replace(/<\/title>/i, `</title>\n    <meta name="description" content="${CONFIG.SEO_DESC}">`);
+    }
+    return html;
+}
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/index.html'));
+    const html = applyHtml(require('fs').readFileSync(path.join(__dirname, '../views/index.html'), 'utf-8'));
+    res.type('html').send(html);
 });
 
 // Start Server

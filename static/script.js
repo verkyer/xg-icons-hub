@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const mobileFooter = document.getElementById('mobileFooter');
             if (mobileFooter) mobileFooter.innerHTML = config.COPYRIGHT;
+            
+            const descTag = document.querySelector('meta[name="description"]');
+            if (descTag && config.SEO_DESC) descTag.setAttribute('content', config.SEO_DESC);
 
         } catch (error) {
             console.error('Error fetching config:', error);

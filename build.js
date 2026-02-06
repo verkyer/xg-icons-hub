@@ -40,7 +40,8 @@ console.log('Created dist directory');
 const config = {
     SITE_NAME: process.env.SITE_NAME || 'XG-icons',
     LOGO_IMG: process.env.LOGO_IMG || 'favicon.ico',
-    COPYRIGHT: process.env.COPYRIGHT || 'By <a href="https://github.com/verkyer/xg-icons-hub" target="_blank">xg-icons-hub</a>. @<a href="https://www.xiaoge.org" target="_blank">XiaoGe</a>.'
+    COPYRIGHT: process.env.COPYRIGHT || 'By <a href="https://github.com/verkyer/xg-icons-hub" target="_blank">xg-icons-hub</a>. @<a href="https://www.xiaoge.org" target="_blank">XiaoGe</a>.',
+    SEO_DESC: process.env.SEO_DESC || '又一个图标托管项目~ 让你的 Docker 、导航站更 Nice！'
 };
 
 fs.writeFileSync(path.join(API_DIR, 'config.json'), JSON.stringify(config, null, 2));
@@ -69,8 +70,20 @@ if (fs.existsSync(srcImages)) {
 
 // 4. Copy and Process HTML
 let html = fs.readFileSync(path.join(__dirname, 'views/index.html'), 'utf-8');
-// If we needed to inject anything, we would do it here. 
-// For now, just copy it to index.html
+const name = (config.SITE_NAME || 'XG-icons').trim();
+let logo = config.LOGO_IMG || 'favicon.ico';
+if (!/^https?:\/\//.test(logo)) {
+    logo = logo === 'favicon.ico' ? '/static/favicon.ico' : (logo.startsWith('/') ? logo : `/${logo}`);
+}
+html = html.replace(/<title>.*?<\/title>/i, `<title>${name}</title>`);
+html = html.replace(/<h1 id="siteTitle">.*?<\/h1>/i, `<h1 id="siteTitle">${name}</h1>`);
+html = html.replace(/<img id="siteLogo"[^>]*src="[^"]*"/i, (m)=>m.replace(/src="[^"]*"/, `src="${logo}"`));
+html = html.replace(/<link id="faviconLink"[^>]*href="[^"]*"/i, (m)=>m.replace(/href="[^"]*"/, `href="${logo}"`));
+if (/name="description"/i.test(html)) {
+    html = html.replace(/<meta name="description"[^>]*content="[^"]*"/i, `<meta name="description" content="${config.SEO_DESC}">`);
+} else {
+    html = html.replace(/<\/title>/i, `</title>\n    <meta name="description" content="${config.SEO_DESC}">`);
+}
 fs.writeFileSync(path.join(DIST_DIR, 'index.html'), html);
 console.log('Copied index.html');
 
