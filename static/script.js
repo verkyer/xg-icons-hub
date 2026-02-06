@@ -36,7 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (siteLogo) siteLogo.src = logoSrc;
             
             const faviconLink = document.getElementById('faviconLink');
-            if (faviconLink) faviconLink.href = logoSrc;
+            let faviconSrc = config.FAVICON || 'favicon.ico';
+            if (!/^https?:\/\//.test(faviconSrc)) {
+                faviconSrc = faviconSrc === 'favicon.ico' ? '/static/favicon.ico' : (faviconSrc.startsWith('/') ? faviconSrc : `/${faviconSrc}`);
+            }
+            if (faviconLink) faviconLink.href = faviconSrc;
 
             // Update Footer
             const siteFooter = document.getElementById('siteFooter');
