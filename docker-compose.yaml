@@ -1,0 +1,16 @@
+services:
+  xg-icons-hub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: xg-icons-hub:dev
+    container_name: xg-icons-hub-dev
+    ports:
+      - "28080:5000"
+    volumes:
+      - ./images:/app/images
+    environment:
+      - SITE_NAME=xg-icons-hub #留空则默认显示
+      # - LOGO_IMG=favicon.ico #站点 logo（路径或完整 URL），如 favicon.ico 或 /images/website/GitHub.png
+      # - COPYRIGHT=By xg-icons-hub #页脚版权信息
+    restart: unless-stopped
