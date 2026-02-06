@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         div.addEventListener('click', () => {
-            copyToClipboard(url);
+            copyToClipboard(url, displayName);
         });
 
         return div;
@@ -247,10 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 6. Copy to Clipboard
-    async function copyToClipboard(text) {
+    async function copyToClipboard(text, label) {
         try {
             await navigator.clipboard.writeText(text);
-            showToast(`已复制: ${text}`);
+            showToast(`已复制：${label || text}`);
         } catch (err) {
             console.error('Failed to copy: ', err);
             // Fallback
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
             textArea.select();
             document.execCommand("Copy");
             textArea.remove();
-            showToast(`已复制: ${text}`);
+            showToast(`已复制：${label || text}`);
         }
     }
 
