@@ -13,7 +13,8 @@ const CONFIG = {
     LOGO_IMG: process.env.LOGO_IMG || 'favicon.ico',
     COPYRIGHT: process.env.COPYRIGHT || 'By <a href="https://github.com/verkyer/xg-icons-hub" target="_blank">xg-icons-hub</a>. @<a href="https://www.xiaoge.org" target="_blank">XiaoGe</a>.',
     SEO_DESC: process.env.SEO_DESC || '又一个图标托管项目~ 让你的 Docker 、导航站更 Nice！',
-    FAVICON: process.env.FAVICON || 'favicon.ico'
+    FAVICON: process.env.FAVICON || 'favicon.ico',
+    ICP: process.env.ICP || ''
 };
 
 // Middleware
@@ -57,6 +58,9 @@ function applyHtml(html) {
     } else {
         html = html.replace(/<\/title>/i, `</title>\n    <meta name="description" content="${CONFIG.SEO_DESC}">`);
     }
+    const footerContent = CONFIG.COPYRIGHT + (CONFIG.ICP ? `<br><a id="icpLink" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer nofollow">${CONFIG.ICP}</a>` : '');
+    html = html.replace(/(<footer id="siteFooter"[^>]*>)[\s\S]*?(<\/footer>)/i, `$1${footerContent}$2`);
+    html = html.replace(/(<footer id="mobileFooter"[^>]*>)[\s\S]*?(<\/footer>)/i, `$1${footerContent}$2`);
     return html;
 }
 

@@ -42,7 +42,8 @@ const config = {
     LOGO_IMG: process.env.LOGO_IMG || 'favicon.ico',
     COPYRIGHT: process.env.COPYRIGHT || 'By <a href="https://github.com/verkyer/xg-icons-hub" target="_blank">xg-icons-hub</a>. @<a href="https://www.xiaoge.org" target="_blank">XiaoGe</a>.',
     SEO_DESC: process.env.SEO_DESC || '又一个图标托管项目~ 让你的 Docker 、导航站更 Nice！',
-    FAVICON: process.env.FAVICON || 'favicon.ico'
+    FAVICON: process.env.FAVICON || 'favicon.ico',
+    ICP: process.env.ICP || ''
 };
 
 fs.writeFileSync(path.join(API_DIR, 'config.json'), JSON.stringify(config, null, 2));
@@ -89,6 +90,9 @@ if (/name="description"/i.test(html)) {
 } else {
     html = html.replace(/<\/title>/i, `</title>\n    <meta name="description" content="${config.SEO_DESC}">`);
 }
+const footerContent = config.COPYRIGHT + (config.ICP ? `<br><a id="icpLink" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer nofollow">${config.ICP}</a>` : '');
+html = html.replace(/(<footer id="siteFooter"[^>]*>)[\s\S]*?(<\/footer>)/i, `$1${footerContent}$2`);
+html = html.replace(/(<footer id="mobileFooter"[^>]*>)[\s\S]*?(<\/footer>)/i, `$1${footerContent}$2`);
 fs.writeFileSync(path.join(DIST_DIR, 'index.html'), html);
 console.log('Copied index.html');
 

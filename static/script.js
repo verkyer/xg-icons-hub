@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Update Footer
             const siteFooter = document.getElementById('siteFooter');
-            if (siteFooter) siteFooter.innerHTML = config.COPYRIGHT;
+            if (siteFooter) siteFooter.innerHTML = config.COPYRIGHT + (config.ICP ? `<br><a id="icpLink" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer nofollow">${config.ICP}</a>` : '');
             
             const mobileFooter = document.getElementById('mobileFooter');
-            if (mobileFooter) mobileFooter.innerHTML = config.COPYRIGHT;
+            if (mobileFooter) mobileFooter.innerHTML = config.COPYRIGHT + (config.ICP ? `<br><a id="icpLink" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer nofollow">${config.ICP}</a>` : '');
             
             const descTag = document.querySelector('meta[name="description"]');
             if (descTag && config.SEO_DESC) descTag.setAttribute('content', config.SEO_DESC);
