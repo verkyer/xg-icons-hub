@@ -17,14 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const config = await res.json();
 
             // Update Title
-            document.title = config.SITE_NAME;
+            const siteName = (config.SITE_NAME && config.SITE_NAME.trim()) ? config.SITE_NAME.trim() : 'XG-icons';
+            document.title = siteName;
             const siteTitle = document.getElementById('siteTitle');
-            if (siteTitle) siteTitle.textContent = config.SITE_NAME;
+            if (siteTitle) siteTitle.textContent = siteName;
 
             // Update Logo
             let logoSrc = config.LOGO_IMG;
-            if (logoSrc === 'favicon.ico') {
-                logoSrc = '/static/favicon.ico';
+            if (!/^https?:\/\//.test(logoSrc)) {
+                if (logoSrc === 'favicon.ico') {
+                    logoSrc = '/static/favicon.ico';
+                } else {
+                    logoSrc = logoSrc.startsWith('/') ? logoSrc : `/${logoSrc}`;
+                }
             }
             
             const siteLogo = document.getElementById('siteLogo');
@@ -77,6 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let allCategoryScrollTop = 0;
     const mainContent = document.querySelector('.main-content');
     const mobileCategorySelect = document.getElementById('mobileCategorySelect');
+    const siteLogoEl = document.getElementById('siteLogo');
+    const siteTitleEl = document.getElementById('siteTitle');
 
     function renderCategories() {
         // Clear existing
@@ -275,6 +282,13 @@ document.addEventListener('DOMContentLoaded', () => {
             behavior: 'smooth'
         });
     });
+
+    // 8. Click Logo/Title to scroll to top
+    function scrollTopViaLogo() {
+        mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    if (siteLogoEl) siteLogoEl.addEventListener('click', scrollTopViaLogo);
+    if (siteTitleEl) siteTitleEl.addEventListener('click', scrollTopViaLogo);
 
     // Init
     fetchConfig();

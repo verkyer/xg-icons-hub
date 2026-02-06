@@ -6,8 +6,8 @@
     --text-color: #1D1D1F; /* Almost black */
     --text-secondary: #86868B;
     --border-color: rgba(0, 0, 0, 0.1); /* Subtle separator */
-    --card-bg: #FFFFFF;
-    --card-hover-bg: #FFFFFF;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --card-hover-bg: rgba(255, 255, 255, 0.9);
     --primary-color: #007AFF; /* Apple Blue */
     --primary-hover: #0071E3;
     
@@ -33,8 +33,8 @@
     --text-color: rgba(245, 245, 247, 0.7); /* Reduced brightness further */
     --text-secondary: #86868B;
     --border-color: rgba(255, 255, 255, 0.1);
-    --card-bg: rgba(28, 28, 30, 0.6); /* Even more transparent/weaker */
-    --card-hover-bg: rgba(44, 44, 46, 0.6);
+    --card-bg: rgba(28, 28, 30, 0.5); /* Slightly more transparent */
+    --card-hover-bg: rgba(44, 44, 46, 0.55);
     --primary-color: #0A84FF; /* Dark mode blue */
     --primary-hover: #409CFF;
     --hover-border-color: rgba(255, 255, 255, 0.3); /* Reduced from 0.5 */
@@ -91,11 +91,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    cursor: pointer;
 }
 
 .logo-img {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     margin-right: 12px;
     object-fit: contain;
     /* Subtle shadow for logo */
@@ -201,11 +202,11 @@ body {
     border: none;
     color: var(--text-color);
     padding: 0;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -377,6 +378,7 @@ body {
     text-overflow: ellipsis;
     word-break: break-word;
     max-height: 100%;
+    transform: translateY(2px);
 }
 
 /* Utilities */
@@ -550,11 +552,11 @@ body {
     }
     
     .btn-icon {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         padding: 0;
         border: none;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .main-content {
@@ -607,8 +609,8 @@ body {
     }
     
     .icon-img-wrapper {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         margin-bottom: 6px;
     }
     
