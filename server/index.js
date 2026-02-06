@@ -50,10 +50,10 @@ function applyHtml(html) {
     }
     html = html.replace(/<title>.*?<\/title>/i, `<title>${name}</title>`);
     html = html.replace(/<h1 id="siteTitle">.*?<\/h1>/i, `<h1 id="siteTitle">${name}</h1>`);
-    html = html.replace(/<img id="siteLogo"[^>]*src="[^"]*"/i, (m)=>m.replace(/src="[^"]*"/, `src="${logo}"`));
-    html = html.replace(/<link id="faviconLink"[^>]*href="[^"]*"/i, (m)=>m.replace(/href="[^"]*"/, `href="${favicon}"`));
+    html = html.replace(/(<img id="siteLogo"[^>]*\bsrc=")[^"]*"/i, `$1${logo}"`);
+    html = html.replace(/(<link id="faviconLink"[^>]*\bhref=")[^"]*"/i, `$1${favicon}"`);
     if (/name="description"/i.test(html)) {
-        html = html.replace(/<meta name="description"[^>]*content="[^"]*"/i, `<meta name="description" content="${CONFIG.SEO_DESC}">`);
+        html = html.replace(/<meta name="description"[^>]*content="[^"]*"[^>]*>/i, `<meta name="description" content="${CONFIG.SEO_DESC}">`);
     } else {
         html = html.replace(/<\/title>/i, `</title>\n    <meta name="description" content="${CONFIG.SEO_DESC}">`);
     }
