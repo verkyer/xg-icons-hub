@@ -177,18 +177,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const query = searchInput.value.toLowerCase();
         let hasResults = false;
 
-        allIcons.forEach(cat => {
-            if (currentCategory !== 'all' && cat.name !== currentCategory) return;
-
-            cat.icons.forEach(iconName => {
-                // Filter by search
-                if (query && !iconName.toLowerCase().includes(query)) return;
-
+        if (currentCategory === 'all') {
+            const aggregated = [];
+            allIcons.forEach(cat => {
+                cat.icons.forEach(iconName => {
+                    const displayName = iconName.replace(/\.[^/.]+$/, "");
+                    if (query && !displayName.toLowerCase().includes(query)) return;
+                    aggregated.push({ category: cat.name, iconName, displayName });
+                });
+            });
+            aggregated.sort((a, b) => a.displayName.localeCompare(b.displayName, 'zh-CN', { sensitivity: 'base' }) || a.category.localeCompare(b.category, 'zh-CN'));
+            aggregated.forEach(item => {
                 hasResults = true;
-                const card = createIconCard(cat.name, iconName);
+                const card = createIconCard(item.category, item.iconName);
                 iconGrid.appendChild(card);
             });
-        });
+        } else {
+            allIcons.forEach(cat => {
+                if (cat.name !== currentCategory) return;
+                cat.icons.forEach(iconName => {
+                    const displayName = iconName.replace(/\.[^/.]+$/, "");
+                    if (query && !displayName.toLowerCase().includes(query)) return;
+                    hasResults = true;
+                    const card = createIconCard(cat.name, iconName);
+                    iconGrid.appendChild(card);
+                });
+            });
+        }
 
         if (!hasResults) {
             emptyState.classList.remove('hidden');
@@ -208,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const displayName = filename.replace(/\.[^/.]+$/, "");
 
         div.innerHTML = `
+            <div class="icon-category-badge" aria-hidden="true">${category}</div>
             <div class="icon-img-wrapper">
                 <img src="${url}" alt="${filename}" loading="lazy" onerror="this.src='/static/favicon.ico';this.style.opacity=0.5;">
             </div>
