@@ -51,16 +51,21 @@ try {
     fs.writeFileSync(path.join(API_DIR, 'icons.json'), JSON.stringify(icons, null, 2));
     console.log(`Generated api/icons.json with ${icons.length} categories`);
 } catch (error) {
-    console.error('Error generating icons:', error);
-    process.exit(1);
+    fs.writeFileSync(path.join(API_DIR, 'icons.json'), JSON.stringify([], null, 2));
+    console.warn('Icons directory missing or unreadable, generated empty icons.json');
 }
 
 // 3. Copy Static Assets
 copyDir(path.join(__dirname, 'static'), path.join(DIST_DIR, 'static'));
 console.log('Copied static assets');
 
-copyDir(path.join(__dirname, 'images'), path.join(DIST_DIR, 'images'));
-console.log('Copied images');
+const srcImages = path.join(__dirname, 'images');
+if (fs.existsSync(srcImages)) {
+    copyDir(srcImages, path.join(DIST_DIR, 'images'));
+    console.log('Copied images');
+} else {
+    console.log('Images directory not found, skip copying');
+}
 
 // 4. Copy and Process HTML
 let html = fs.readFileSync(path.join(__dirname, 'views/index.html'), 'utf-8');
