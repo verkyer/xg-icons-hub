@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const iconGrid = document.getElementById('iconGrid');
     const categoryList = document.getElementById('categoryList');
+    const topCategoryList = document.getElementById('topCategoryList');
     const searchInput = document.getElementById('searchInput');
     const themeToggle = document.getElementById('themeToggle');
     const loading = document.getElementById('loading');
@@ -94,17 +95,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderCategories() {
         // Clear existing
-        categoryList.innerHTML = '';
+        if (categoryList) categoryList.innerHTML = '';
+        if (topCategoryList) topCategoryList.innerHTML = '';
         mobileCategorySelect.innerHTML = '';
 
         // Add "All" option for Desktop
-        const allLi = document.createElement('li');
-        allLi.textContent = `全部 (${allIcons.reduce((sum, cat) => sum + cat.icons.length, 0)})`;
-        allLi.classList.add('active');
-        allLi.addEventListener('click', () => {
-            switchCategory('all', allLi);
-        });
-        categoryList.appendChild(allLi);
+        const allText = `全部 (${allIcons.reduce((sum, cat) => sum + cat.icons.length, 0)})`;
+        let allLi = null;
+        if (topCategoryList) {
+            allLi = document.createElement('li');
+            allLi.textContent = allText;
+            allLi.classList.add('active');
+            allLi.addEventListener('click', () => {
+                switchCategory('all', allLi);
+            });
+            topCategoryList.appendChild(allLi);
+        } else if (categoryList) {
+            allLi = document.createElement('li');
+            allLi.textContent = allText;
+            allLi.classList.add('active');
+            allLi.addEventListener('click', () => {
+                switchCategory('all', allLi);
+            });
+            categoryList.appendChild(allLi);
+        }
 
         // Add "All" option for Mobile
         const allOption = document.createElement('option');
@@ -113,14 +127,26 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileCategorySelect.appendChild(allOption);
 
         allIcons.forEach(cat => {
-            // Desktop List Item
-            const li = document.createElement('li');
-            li.textContent = `${cat.name} (${cat.icons.length})`;
-            li.dataset.category = cat.name; // Add data attribute for easier lookup
-            li.addEventListener('click', () => {
-                switchCategory(cat.name, li);
-            });
-            categoryList.appendChild(li);
+            // Desktop List Item(s)
+            const text = `${cat.name} (${cat.icons.length})`;
+            if (topCategoryList) {
+                const liTop = document.createElement('li');
+                liTop.textContent = text;
+                liTop.dataset.category = cat.name;
+                liTop.addEventListener('click', () => {
+                    switchCategory(cat.name, liTop);
+                });
+                topCategoryList.appendChild(liTop);
+            }
+            if (categoryList) {
+                const liSide = document.createElement('li');
+                liSide.textContent = text;
+                liSide.dataset.category = cat.name;
+                liSide.addEventListener('click', () => {
+                    switchCategory(cat.name, liSide);
+                });
+                categoryList.appendChild(liSide);
+            }
 
             // Mobile Option
             const option = document.createElement('option');
@@ -167,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateActiveCategory(activeElement) {
-        document.querySelectorAll('.category-nav li').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.category-nav li, .top-category-nav li').forEach(el => el.classList.remove('active'));
         activeElement.classList.add('active');
     }
 
