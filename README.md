@@ -1,8 +1,13 @@
 # xg-icons-hub
 又一个图标托管项目~ 让你的 Docker 、导航站更 Nice！
+
 博主提供了自行重置的部分高清图标，可以直接食用，当然亦可私有自行部署。
 
-## 部署
+![demo](demo.png)
+
+## 快速部署
+
+Fork 本仓库到你的 GitHub 账号，图标路径 `/images` 下可自行替换为自己的图标，格式为：`/images/目录名/图标文件` 。
 
 ### Cloudflare Pages
 - 默认即可部署（安装阶段执行 `postinstall` 生成 `dist` 并发布）。
@@ -18,18 +23,13 @@
   - 安装命令：`npm ci`
   - 构建命令：留空 或 `npm run build`
 
-### 快速启动（需 Fork）
-- 请先 Fork 本仓库到你的 GitHub 账号，然后：
-  - Cloudflare Pages：在控制台「创建项目 → 连接 GitHub」选择你的 fork 仓库，默认即可部署；如需手动参数参考上文。
-  - EdgeOne Pages：在控制台构建设置中仅需填写 输出目录：`dist`，其他参数保持默认即可。
-
 ## 本地开发
 - 构建：`npm run build`
 - 预览（可选，本地 Node 服务器）：`npm start`（默认端口 `5000`）
 
-## Docker 部署示例（参考）
+## Docker 部署示例
 
-示例使用 Compose 将宿主机图标目录挂载到容器 `/app/images`，并将 28080 映射到容器端口 5000：
+宿主机图标路径：`./images` 、映射端口`28080` 均可按需改动。
 
 - Docker Hub 镜像：
 
