@@ -1,5 +1,5 @@
 # xg-icons-hub
-又一个图标托管项目~ 让你的 Docker 、导航站更 Nice！
+🎉又一个图标托管项目~ 让你的 Docker 、导航站更 Nice！
 
 博主提供了自行重置的部分高清图标，可以直接食用，当然亦可私有自行部署。
 
@@ -7,7 +7,7 @@
 
 ## 快速部署
 
-Fork 本仓库到你的 GitHub 账号，图标路径 `/images` 下可自行替换为自己的图标，格式为：`/images/目录名/图标文件` 。
+Fork 本仓库到你的 GitHub 账号，图标路径 `/images` 下可替换为自己的图标，格式为：`/images/目录名/图标文件` 
 
 ### Cloudflare Pages
 - 默认即可部署（安装阶段执行 `postinstall` 生成 `dist` 并发布）。
