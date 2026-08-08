@@ -15,7 +15,9 @@ const CONFIG = {
     COPYRIGHT: process.env.COPYRIGHT || 'By <a href="https://github.com/verkyer/xg-icons-hub" target="_blank">xg-icons-hub</a>. @<a href="https://www.xiaoge.org" target="_blank">XiaoGe</a>.',
     SEO_DESC: process.env.SEO_DESC || '又一个图标托管项目~ 让你的 Docker 、导航站更 Nice！',
     FAVICON: process.env.FAVICON || 'favicon.ico',
-    ICP: process.env.ICP || ''
+    ICP: process.env.ICP || '',
+    UMAMI_URL: process.env.UMAMI_URL || '',
+    UMAMI_SITE_ID: process.env.UMAMI_SITE_ID || ''
 };
 
 // Middleware

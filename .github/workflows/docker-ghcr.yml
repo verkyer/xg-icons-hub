@@ -2,9 +2,12 @@ name: Build and Push to GHCR
 
 on:
   workflow_dispatch: {}
+  release:
+    types: [published]
 
 jobs:
   docker:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.release.prerelease == false }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -34,7 +37,7 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=raw,value=latest
-            type=sha,format=short
+            type=raw,value=${{ github.event.release.tag_name }},enable=${{ github.event_name == 'release' }}
 
       - name: Build and push
         uses: docker/build-push-action@v5

@@ -20,6 +20,28 @@ function normalizeAsset(val, defaultName = 'favicon.ico') {
     return asset.startsWith('/') ? asset : `/${asset}`;
 }
 
+function normalizeUmamiUrl(val) {
+    const url = (val || '').trim().replace(/\/+$/, '');
+    if (!url) return '';
+
+    try {
+        const parsed = new URL(url);
+        return ['http:', 'https:'].includes(parsed.protocol) ? url : '';
+    } catch {
+        return '';
+    }
+}
+
+function escapeHtmlAttribute(val) {
+    return String(val).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[char]);
+}
+
 /**
  * Injects configuration values into the HTML template.
  * @param {string} html - The raw HTML template.
@@ -51,6 +73,15 @@ function applyHtml(html, config) {
     } else {
         // Insert after </title> if not found
         out = out.replace(/<\/title>/i, `</title>\n    <meta name="description" content="${seoDesc}">`);
+    }
+
+    // Inject Umami analytics when both settings are configured
+    const umamiUrl = normalizeUmamiUrl(config.UMAMI_URL);
+    const umamiSiteId = (config.UMAMI_SITE_ID || '').trim();
+    if (umamiUrl && umamiSiteId) {
+        const scriptUrl = escapeHtmlAttribute(`${umamiUrl}/script.js`);
+        const siteId = escapeHtmlAttribute(umamiSiteId);
+        out = out.replace(/<\/head>/i, `    <script defer src="${scriptUrl}" data-website-id="${siteId}"></script>\n</head>`);
     }
 
     // Replace Footer

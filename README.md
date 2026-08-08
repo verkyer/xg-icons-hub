@@ -14,6 +14,7 @@ Fork 本仓库到你的 GitHub 账号，图标路径 `/images` 下可替换为�
 - 可选参数（如需手动设置）：
   - 构建命令：`npm ci` 或 `npm run build`（默认即可）
   - 输出目录：`dist`
+- `UMAMI_URL`、`UMAMI_SITE_ID` 等环境变量需要配置为构建环境变量；修改后需重新部署。
 
 ### EdgeOne Pages
 - 必须在「构建设置」里将 输出目录 设置为：`dist`
@@ -50,6 +51,8 @@ services:
       # - COPYRIGHT=版权所有 © 2026
       # - ICP=粤ICP备12345678号-1
       # - SEO_DESC=站点描述
+      # - UMAMI_URL=https://cloud.umami.is
+      # - UMAMI_SITE_ID=网站 ID
     restart: unless-stopped
 ```
 
@@ -71,11 +74,13 @@ services:
       # - COPYRIGHT=HTML 文本
       # - ICP=粤ICP备12345678号-1
       # - SEO_DESC=站点描述
+      # - UMAMI_URL=https://cloud.umami.is
+      # - UMAMI_SITE_ID=网站 ID
     restart: unless-stopped
 ```
 
 ## 环境变量
-`SITE_NAME`、`LOGO_IMG`、`FAVICON`、`COPYRIGHT`、`ICP`、`SEO_DESC` 均为独立变量，互不影响、互不覆盖。可以单独或组合设置。
+`SITE_NAME`、`LOGO_IMG`、`FAVICON`、`COPYRIGHT`、`ICP`、`SEO_DESC` 可以单独或组合设置。`UMAMI_URL`、`UMAMI_SITE_ID` 需要同时设置才会启用统计。
 
 - `SITE_NAME`：站点名称（浏览器标签标题、页面大标题）
 - `LOGO_IMG`：页面内 Logo 图（支持完整 `http(s)` 链接或相对路径，如 `images/website/GitHub.png`）
@@ -83,12 +88,19 @@ services:
 - `COPYRIGHT`：页脚版权信息（HTML 文本）
 - `ICP`：备案号文本；设置后显示在版权信息下方，未设置则不显示
 - `SEO_DESC`：页面 `<meta name="description">` 文本
+- `UMAMI_URL`：Umami 服务根地址；官方托管填写 `https://cloud.umami.is`，自托管填写自己的 Umami 地址
+- `UMAMI_SITE_ID`：Umami 后台的网站 ID；与 `UMAMI_URL` 同时设置后，跟踪代码会自动注入页面 `<head>`
 
 
 生成与使用流程：
 - 安装或构建时，[build.js](./build.js) 会把环境变量写入 `dist/api/config.json`
-- 构建与服务端渲染会在首页 HTML 中直接注入标题/Logo/描述/页脚（含 ICP），避免首次加载闪烁
+- 构建与服务端渲染会在首页 HTML 中直接注入标题/Logo/描述/页脚（含 ICP）及 Umami 跟踪代码，避免首次加载闪烁
 - 前端运行时由 [static/script.js](./static/script.js) 读取并同步页面状态（与后端注入一致）
+
+## Docker 镜像发布
+- Docker Hub 和 GHCR 工作流均支持手动运行，手动运行时推送 `latest`。
+- 发布正式 GitHub Release 后会自动构建，并推送 Release tag（如 `v1.2.0`）和 `latest`。
+- GitHub Pre-release 不会自动构建镜像，仍可按需手动运行工作流。
 
 ## 说明
 - 构建脚本：[build.js](./build.js) 使用 Node.js 内置模块，将图标数据生成为静态 JSON（`/api/icons.json`、`/api/config.json`），以及复制资源至 `dist`。
