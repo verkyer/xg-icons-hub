@@ -24,6 +24,8 @@
   "homepage": "https://github.com/verkyer/xg-icons-hub#readme",
   "devDependencies": {
     "cors": "^2.8.5",
+    "cookie-parser": "^1.4.6",
+    "csurf": "^1.11.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "terser": "^5.49.0"
