@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const csurf = require('csurf');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const { getIcons } = require('./services/iconScanner');
 const { applyHtml } = require('./services/htmlTemplate');
@@ -22,6 +24,8 @@ const CONFIG = {
 
 // Middleware
 app.use(cors());
+app.use(cookieParser());
+app.use(csurf({ cookie: true }));
 
 // Static Files - Core Requirement: /images path must remain stable
 app.use('/images', express.static(path.join(__dirname, '../images')));
