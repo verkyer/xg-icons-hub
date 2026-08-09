@@ -376,6 +376,10 @@ button {
     box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
+.mobile-result-count {
+    display: none;
+}
+
 .clear-btn {
     position: absolute;
     right: 5px;
@@ -1521,6 +1525,29 @@ body.modal-open .icon-scroll-area {
         outline: 2px solid var(--accent-border);
         outline-offset: -2px;
         box-shadow: none;
+    }
+
+    .mobile-result-count {
+        display: inline-flex;
+        height: 32px;
+        margin-right: 4px;
+        gap: 5px;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-tertiary);
+        font-size: 11px;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .mobile-result-count::before {
+        width: 4px;
+        height: 4px;
+        flex: 0 0 4px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        content: "";
     }
 
     .mobile-category-wrapper.hidden-desktop {

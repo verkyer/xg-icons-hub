@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toast = document.getElementById('toast');
     const currentViewTitle = document.getElementById('currentViewTitle');
     const resultSummary = document.getElementById('resultSummary');
+    const mobileResultCount = document.getElementById('mobileResultCount');
 
     const INITIAL_ICON_BATCH_SIZE = 88;
     const ICON_BATCH_SIZE = 48;
@@ -283,6 +284,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (resultSummary) {
             resultSummary.textContent = query ? `找到 ${resultCount} 个` : `${resultCount} 个图标`;
+        }
+        if (mobileResultCount) {
+            mobileResultCount.textContent = resultCount > 0 ? resultCount : '';
+            mobileResultCount.classList.toggle('hidden', resultCount === 0);
         }
 
         if (resultCount === 0) {
