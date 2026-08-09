@@ -10,7 +10,13 @@ services:
     volumes:
       - ./images:/app/images
     environment:
-      - SITE_NAME=xg-icons-hub #留空则默认显示
-      # - LOGO_IMG=favicon.ico #站点 logo（路径或完整 URL），如 favicon.ico 或 /images/website/GitHub.png
-      # - COPYRIGHT=By xg-icons-hub #页脚版权信息
+      - SITE_NAME=xg-icons-hub
+      # 可选变量（按需打开）：
+      # - LOGO_IMG=favicon.ico        # 路径或完整 URL
+      # - FAVICON=/static/favicon.ico
+      # - COPYRIGHT=HTML、文本
+      # - ICP=粤ICP备12345678号-1
+      # - SEO_DESC=站点描述
+      # - UMAMI_URL=https://cloud.umami.is
+      # - UMAMI_SITE_ID=网站 ID
     restart: unless-stopped

@@ -1377,6 +1377,14 @@ body.modal-open .icon-scroll-area {
 }
 
 @media (min-width: 769px) {
+    .sidebar {
+        border-radius: calc(var(--radius-window) - 1px) 0 0 calc(var(--radius-window) - 1px);
+    }
+
+    .content-header {
+        border-radius: 0 calc(var(--radius-window) - 1px) 0 0;
+    }
+
     .hidden-mobile {
         display: flex;
     }

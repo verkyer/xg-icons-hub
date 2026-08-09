@@ -28,9 +28,9 @@ Fork 本仓库到你的 GitHub 账号，图标路径 `/images` 下可替换为�
 - 构建：`npm run build`
 - 预览（可选，本地 Node 服务器）：`npm start`（默认端口 `5000`）
 
-## Docker 部署示例
+## Docker 部署
 
-宿主机图标路径：`./images` 、映射端口`28080` 均可按需改动。
+宿主机图标路径：`./images` 、映射端口 `28080` 均可按需改动。
 
 - Docker Hub 镜像：
 
@@ -56,31 +56,9 @@ services:
     restart: unless-stopped
 ```
 
-- ghcr 镜像：
-```yaml
-services:
-  xg-icons-hub:
-    image: ghcr.io/verkyer/xg-icons-hub:latest
-    container_name: xg-icons-hub
-    ports:
-      - "28080:5000"
-    volumes:
-      - ./images:/app/images
-    environment:
-      - SITE_NAME=xg-icons-hub
-      # 可选变量（按需打开）：
-      # - LOGO_IMG=favicon.ico        # 路径或完整 URL
-      # - FAVICON=/static/favicon.ico
-      # - COPYRIGHT=HTML 文本
-      # - ICP=粤ICP备12345678号-1
-      # - SEO_DESC=站点描述
-      # - UMAMI_URL=https://cloud.umami.is
-      # - UMAMI_SITE_ID=网站 ID
-    restart: unless-stopped
-```
+- ghcr 镜像版，可改为 `ghcr.io/verkyer/xg-icons-hub:latest`
 
 ## 环境变量
-`SITE_NAME`、`LOGO_IMG`、`FAVICON`、`COPYRIGHT`、`ICP`、`SEO_DESC` 可以单独或组合设置。`UMAMI_URL`、`UMAMI_SITE_ID` 需要同时设置才会启用统计。
 
 - `SITE_NAME`：站点名称（浏览器标签标题、页面大标题）
 - `LOGO_IMG`：页面内 Logo 图（支持完整 `http(s)` 链接或相对路径，如 `images/website/GitHub.png`）
@@ -91,16 +69,26 @@ services:
 - `UMAMI_URL`：Umami 服务根地址；官方托管填写 `https://cloud.umami.is`，自托管填写自己的 Umami 地址
 - `UMAMI_SITE_ID`：Umami 后台的网站 ID；与 `UMAMI_URL` 同时设置后，跟踪代码会自动注入页面 `<head>`
 
+> `UMAMI_URL`、`UMAMI_SITE_ID` 需要同时设置才会启用统计
 
 生成与使用流程：
 - 安装或构建时，[build.js](./build.js) 会把环境变量写入 `dist/api/config.json`
 - 构建与服务端渲染会在首页 HTML 中直接注入标题/Logo/描述/页脚（含 ICP）及 Umami 跟踪代码，避免首次加载闪烁
 - 前端运行时由 [static/script.js](./static/script.js) 读取并同步页面状态（与后端注入一致）
 
-## Docker 镜像发布
-- Docker Hub 和 GHCR 工作流均支持手动运行，手动运行时推送 `latest`。
-- 发布正式 GitHub Release 后会自动构建，并推送 Release tag（如 `v1.2.0`）和 `latest`。
-- GitHub Pre-release 不会自动构建镜像，仍可按需手动运行工作流。
+## Docker 极速部署
+
+```yaml
+services:
+  xg-icons-hub:
+    image: verky/xg-icons-hub:latest
+    container_name: xg-icons-hub
+    ports:
+      - "28080:5000"
+    restart: unless-stopped
+```
+
+> 适用于仅需要「项目自带图标」，无自行图标托管需求的场景
 
 ## 说明
 - 构建脚本：[build.js](./build.js) 使用 Node.js 内置模块，将图标数据生成为静态 JSON（`/api/icons.json`、`/api/config.json`），以及复制资源至 `dist`。
